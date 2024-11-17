@@ -1,4 +1,5 @@
-import { sendFile, sendJSX } from "@lib/response.ts";
+import { sendJSX } from "@lib/response.ts";
+import { serveFile } from "jsr:@std/http/file-server";
 import Home from "./page.tsx"
 import routes from "./api.ts"
 
@@ -11,10 +12,10 @@ export default routes.concat([
     },
     {
         pattern: new URLPattern({ pathname: `${BASE_PATH}script.js` }),
-        handler: () => sendFile(`${import.meta.dirname}/script.js`, 'text/javascript')
+        handler: (req: Request) => serveFile(req, `${import.meta.dirname}/script.js`)
     },
     {
         pattern: new URLPattern({ pathname: `${BASE_PATH}style.css` }),
-        handler: () => sendFile(`${import.meta.dirname}/style.css`, 'text/css')
+        handler: (req: Request) => serveFile(req, `${import.meta.dirname}/style.css`)
     }
 ])

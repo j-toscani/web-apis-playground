@@ -13,7 +13,7 @@ export function Layout({ title, children, styles = null, scripts = null }: Props
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>{title ? `Web Api Playground - ${title}` : 'Web Api Playground'}</title>
-        <link rel="stylesheet" href="style.css" />
+        <link rel="stylesheet" href="/public/global.css" />
         {styles}
       </head>
       <body>{children}</body>

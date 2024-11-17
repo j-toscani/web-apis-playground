@@ -4,7 +4,10 @@ export default function Page() {
   return (
     <Layout>
       <main>
+        <section className="content">
+
         <h1>Hi!</h1>
+        </section>
       </main>
     </Layout>
   );
