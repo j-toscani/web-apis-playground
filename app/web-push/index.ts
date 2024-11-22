@@ -4,18 +4,18 @@ import Home from "./page.tsx"
 import routes from "./api.ts"
 
 const BASE_PATH = '/web-push'
-
+console.log(`${import.meta.dirname}/script.js`)
 export default routes.concat([
     {
         pattern: new URLPattern({ pathname: `${BASE_PATH}` }),
         handler: () => sendJSX(Home())
     },
     {
-        pattern: new URLPattern({ pathname: `${BASE_PATH}script.js` }),
+        pattern: new URLPattern({ pathname: `${BASE_PATH}/script.js` }),
         handler: (req: Request) => serveFile(req, `${import.meta.dirname}/script.js`)
     },
     {
-        pattern: new URLPattern({ pathname: `${BASE_PATH}style.css` }),
+        pattern: new URLPattern({ pathname: `${BASE_PATH}/style.css` }),
         handler: (req: Request) => serveFile(req, `${import.meta.dirname}/style.css`)
     }
 ])

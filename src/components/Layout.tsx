@@ -17,6 +17,7 @@ export function Layout({ title, children, styles = null, scripts = null }: Props
         {styles}
       </head>
       <body>{children}</body>
+      <script defer src="/public/hmr.js" />
       {scripts}
     </html>
   );

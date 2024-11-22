@@ -2,7 +2,7 @@ import { Layout } from "@components/Layout.tsx";
 
 export default function Page() {
   return (
-    <Layout>
+    <Layout scripts={<script src="web-push/script.js" />}>
       <main>
         <section className="content">
           <h1>Hi, this is Webpush!</h1>
