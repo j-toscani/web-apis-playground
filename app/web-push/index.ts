@@ -4,7 +4,7 @@ import Home from "./page.tsx"
 import routes from "./api.ts"
 
 const BASE_PATH = '/web-push'
-console.log(`${import.meta.dirname}/script.js`)
+
 export default routes.concat([
     {
         pattern: new URLPattern({ pathname: `${BASE_PATH}` }),
