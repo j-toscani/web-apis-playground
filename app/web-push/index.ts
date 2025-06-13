@@ -2,8 +2,20 @@ import { sendJSX } from "@lib/response.ts";
 import { serveFile } from "jsr:@std/http/file-server";
 import Home from "./page.tsx"
 import routes from "./api.ts"
+import { DOMAttributes, ReactElement } from "react";
 
 const BASE_PATH = '/web-push'
+
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      ['button-request-access']: DOMAttributes<any> & { children: ReactElement };
+      ['button-subscribe-to-push']: DOMAttributes<any> & { children: ReactElement };
+      ['button-unsubscribe-to-push']: DOMAttributes<any> & { children: ReactElement };
+      ['button-notify-me']: DOMAttributes<any> & { children: ReactElement };
+    }
+  }
+}
 
 export default routes.concat([
     {
