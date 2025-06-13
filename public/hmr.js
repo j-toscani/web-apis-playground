@@ -1,12 +1,17 @@
-const source = new EventSource('/_events')
+try {
+  const source = new EventSource("/_events");
+
+  source.onopen = (_e) => {
+    console.log(`HMR Script Connected.`);
+  };
+
+  source.onmessage = reload;
+  source.onerror = reload;
+} catch (error) {
+  console.error("Cannot start HMR");
+}
 
 function reload() {
-    location.reload();
+  if (!navigator.onLine) return
+  location.reload();
 }
-
-source.onopen = (_e) => {
-    console.log(`HMR Script Connected.`)
-}
-
-source.onmessage = reload
-source.onerror = reload

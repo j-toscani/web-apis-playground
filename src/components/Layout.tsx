@@ -2,21 +2,33 @@ import type { PropsWithChildren } from "npm:@types/react";
 
 type Props = {
   title?: string;
-  styles?: JSX.Element | null
-  scripts?: JSX.Element | null
+  styles?: JSX.Element | null;
+  scripts?: JSX.Element | null;
 };
 
-export function Layout({ title, children, styles = null, scripts = null }: PropsWithChildren<Props>) {
+export function Layout(
+  { title, children, styles = null, scripts = null }: PropsWithChildren<Props>,
+) {
   return (
     <html lang="en">
       <head>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>{title ? `Web Api Playground - ${title}` : 'Web Api Playground'}</title>
+        <title>
+          {title ? `Web Api Playground - ${title}` : "Web Api Playground"}
+        </title>
         <link rel="stylesheet" href="/public/global.css" />
         {styles}
       </head>
-      <body>{children}</body>
+      <body>
+        <header>
+          <nav className="content flex gap-4">
+            <a href="/">Home</a>
+            <a href="/web-push/">To Web Push-API</a>
+          </nav>
+        </header>
+        {children}
+      </body>
       <script defer src="/public/hmr.js" />
       {scripts}
     </html>
