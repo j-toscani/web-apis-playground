@@ -15,7 +15,9 @@
     "npm:@types/react@*": "18.3.11",
     "npm:react-dom@*": "18.3.1_react@18.3.1",
     "npm:react@*": "18.3.1",
-    "npm:web-push@*": "3.6.7"
+    "npm:web-push@*": "3.6.7",
+    "npm:zod@*": "3.25.64",
+    "npm:zod@^3.25.64": "3.25.64"
   },
   "jsr": {
     "@std/assert@1.0.6": {
@@ -194,6 +196,9 @@
         "minimist"
       ],
       "bin": true
+    },
+    "zod@3.25.64": {
+      "integrity": "sha512-hbP9FpSZf7pkS7hRVUrOjhwKJNyampPgtXKc3AN6DsWtoHsg2Sb4SQaS4Tcay380zSwd2VPo9G9180emBACp5g=="
     }
   },
   "redirects": {
@@ -208,7 +213,8 @@
     "dependencies": [
       "jsr:@std/assert@1",
       "npm:@types/react@*",
-      "npm:react@*"
+      "npm:react@*",
+      "npm:zod@^3.25.64"
     ]
   }
 }

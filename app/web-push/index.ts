@@ -7,7 +7,7 @@ const BASE_PATH = '/web-push'
 
 export default routes.concat([
     {
-        pattern: new URLPattern({ pathname: `${BASE_PATH}` }),
+        pattern: new URLPattern({ pathname: `${BASE_PATH}/` }),
         handler: () => sendJSX(Home())
     },
     {
@@ -15,7 +15,19 @@ export default routes.concat([
         handler: (req: Request) => serveFile(req, `${import.meta.dirname}/script.js`)
     },
     {
+        pattern: new URLPattern({ pathname: `${BASE_PATH}/registerSW.js` }),
+        handler: (req: Request) => serveFile(req, `${import.meta.dirname}/registerSW.js`)
+    },
+    {
+        pattern: new URLPattern({ pathname: `${BASE_PATH}/sw.js` }),
+        handler: (req: Request) => serveFile(req, `${import.meta.dirname}/sw.js`)
+    },
+    {
         pattern: new URLPattern({ pathname: `${BASE_PATH}/style.css` }),
         handler: (req: Request) => serveFile(req, `${import.meta.dirname}/style.css`)
+    },
+    {
+        pattern: new URLPattern({ pathname: `${BASE_PATH}/img.jpg` }),
+        handler: (req: Request) => serveFile(req, `${import.meta.dirname}/img.jpg`)
     }
 ])
