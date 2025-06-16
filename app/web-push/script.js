@@ -15,11 +15,18 @@ function urlB64ToUint8Array(base64String) {
   return outputArray;
 }
 
+function getPermissionStatus() {
+  return navigator.permissions.query({ name: "notifications" }).then((p) =>
+    p.state
+  );
+}
+
 class RequestPushAccess extends HTMLElement {
   constructor() {
     super();
     this.disabled = true;
-    Notification.requestPermission().then((r) => {
+    getPermissionStatus().then((r) => {
+      console.log(r);
       this.disabled = r !== "default";
     });
 
@@ -41,7 +48,7 @@ class RequestPushAccess extends HTMLElement {
   async onClick() {
     this.disabled = true;
 
-    const result = await Notification.requestPermission();
+    const result = await getPermissionStatus();
     if (result === "denied") {
       alert("The user explicitly denied the permission request.");
       return;
@@ -90,7 +97,7 @@ class SubscribeToPush extends HTMLElement {
   }
 
   async checkCanSubscribe() {
-    const result = await Notification.requestPermission();
+    const result = await getPermissionStatus();
     return result === "granted";
   }
 
@@ -115,7 +122,7 @@ class SubscribeToPush extends HTMLElement {
         },
         body: JSON.stringify(subscription),
       });
-      this.getButton().innerText = 'Unsubscribe';
+      this.getButton().innerText = "Unsubscribe";
     } else {
       const subscription = await registration.pushManager.subscribe({
         userVisibleOnly: true,
@@ -132,7 +139,7 @@ class SubscribeToPush extends HTMLElement {
       });
 
       await subscription.unsubscribe();
-      this.getButton().innerText = 'Subscribe';
+      this.getButton().innerText = "Subscribe";
     }
 
     this.getButton().disabled = false;
@@ -166,7 +173,7 @@ class NotifyMe extends HTMLElement {
   }
 
   async checkCanSubscribe() {
-    const result = await Notification.requestPermission();
+    const result = await getPermissionStatus();
     const registration = await navigator.serviceWorker.getRegistration();
     const subscribed = await registration.pushManager.getSubscription();
     return result === "granted" && subscribed;
@@ -194,3 +201,26 @@ class NotifyMe extends HTMLElement {
 }
 
 customElements.define("button-notify-me", NotifyMe);
+
+navigator.serviceWorker.getRegistrations().then(registrations => {
+  registrations.forEach(registration => {
+    listenForWaitingServiceWorker(registration, promptUserToRefresh);
+  })
+})
+
+function listenForWaitingServiceWorker(reg, callback) {
+  function awaitStateChange() {
+    reg.installing.addEventListener("statechange", function () {
+      if (this.state === "installed") callback(reg);
+    });
+  }
+  if (!reg) return;
+  if (reg.waiting) return callback(reg);
+  if (reg.installing) awaitStateChange();
+  reg.addEventListener("updatefound", awaitStateChange);
+}
+
+function promptUserToRefresh(reg) {
+  console.log("Prompting User")
+  reg.waiting.postMessage("skipWaiting");
+}

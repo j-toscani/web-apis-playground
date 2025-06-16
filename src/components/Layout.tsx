@@ -29,7 +29,7 @@ export function Layout(
         </header>
         {children}
       </body>
-      <script defer src="/public/hmr.js" />
+      {/* <script defer src="/public/hmr.js" /> */}
       {scripts}
     </html>
   );

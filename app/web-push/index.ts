@@ -13,6 +13,8 @@ declare global {
       ['button-subscribe-to-push']: DOMAttributes<any> & { children: ReactElement };
       ['button-unsubscribe-to-push']: DOMAttributes<any> & { children: ReactElement };
       ['button-notify-me']: DOMAttributes<any> & { children: ReactElement };
+      ['button-get-registrations']: DOMAttributes<any> & { children: ReactElement };
+      ['handle-sw-update']: DOMAttributes<any> & { children: ReactElement };
     }
   }
 }

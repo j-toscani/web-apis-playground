@@ -1,14 +1,20 @@
+
 const worker = /** @type {ServiceWorkerGlobalScope} */ (self);
 
-const SERVICE_WORKER_VERSION = "v8";
+const SERVICE_WORKER_VERSION = "v4";
 
 worker.addEventListener("install", () => {
   console.log("Installing: ", SERVICE_WORKER_VERSION);
 });
 
-
 worker.addEventListener("activate", () => {
   console.log("Aktivating: ", SERVICE_WORKER_VERSION);
+});
+
+worker.addEventListener("message", (event) => {
+  if (event.data === "skipWaiting") {
+    worker.skipWaiting();
+  }
 });
 
 worker.addEventListener("push", (event) => {

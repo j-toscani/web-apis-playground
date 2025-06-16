@@ -33,6 +33,13 @@ export default function Page() {
             </button-notify-me>
           </div>
         </section>
+        <section>
+          <button-get-registrations>
+            <button type="button">
+              Get Registrations
+            </button>
+          </button-get-registrations>
+        </section>
       </main>
     </Layout>
   );
