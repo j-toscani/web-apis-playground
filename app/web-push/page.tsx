@@ -40,6 +40,18 @@ export default function Page() {
             </button>
           </button-get-registrations>
         </section>
+
+        <dialog-handle-sw-update>
+          <dialog>
+            <h1>
+              Do you want to update the App now?
+            </h1>
+            <div className="flex gap-4">
+              <button type="button" data-confirm>Yes</button>
+              <button type="button" data-deny>No</button>
+            </div>
+          </dialog>
+        </dialog-handle-sw-update>
       </main>
     </Layout>
   );

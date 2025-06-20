@@ -27,7 +27,7 @@ class RequestPushAccess extends HTMLElement {
     this.disabled = true;
     getPermissionStatus().then((r) => {
       console.log(r);
-      this.disabled = r !== "default";
+      this.disabled = r !== "default" && r !== 'prompt';
     });
 
     this.getButton().addEventListener("click", () => this.onClick());
@@ -48,7 +48,7 @@ class RequestPushAccess extends HTMLElement {
   async onClick() {
     this.disabled = true;
 
-    const result = await getPermissionStatus();
+    const result = await Notification.requestPermission();
     if (result === "denied") {
       alert("The user explicitly denied the permission request.");
       return;
@@ -91,13 +91,14 @@ class SubscribeToPush extends HTMLElement {
 
   async getButtonText() {
     const registration = await navigator.serviceWorker.getRegistration();
-    const subscribed = await registration.pushManager.getSubscription();
+    const subscribed = await registration?.pushManager?.getSubscription();
 
     return subscribed ? "Unsubscribe" : "Subscribe";
   }
 
   async checkCanSubscribe() {
     const result = await getPermissionStatus();
+    console.log(result)
     return result === "granted";
   }
 
@@ -202,25 +203,46 @@ class NotifyMe extends HTMLElement {
 
 customElements.define("button-notify-me", NotifyMe);
 
-navigator.serviceWorker.getRegistrations().then(registrations => {
-  registrations.forEach(registration => {
-    listenForWaitingServiceWorker(registration, promptUserToRefresh);
-  })
-})
-
-function listenForWaitingServiceWorker(reg, callback) {
-  function awaitStateChange() {
-    reg.installing.addEventListener("statechange", function () {
-      if (this.state === "installed") callback(reg);
-    });
+class HandleSWUpdate extends HTMLElement {
+  constructor() {
+    super();
   }
-  if (!reg) return;
-  if (reg.waiting) return callback(reg);
-  if (reg.installing) awaitStateChange();
-  reg.addEventListener("updatefound", awaitStateChange);
+
+  connectedCallback() {
+    navigator.serviceWorker.getRegistrations().then((registrations) => {
+      registrations.forEach((registration) => {
+        listenForWaitingServiceWorker(registration, promptUserToRefresh);
+      });
+    });
+
+    function listenForWaitingServiceWorker(reg, callback) {
+      function awaitStateChange() {
+        reg.installing.addEventListener("statechange", function () {
+          if (this.state === "installed") callback(reg);
+        });
+      }
+      if (!reg) return;
+      if (reg.waiting) return callback(reg);
+      if (reg.installing) awaitStateChange();
+      reg.addEventListener("updatefound", awaitStateChange);
+    }
+
+    function promptUserToRefresh(reg) {
+      const dialog = document.querySelector("dialog");
+      const confirmButton = document.querySelector("button[data-confirm]");
+      const denyButton = document.querySelector("button[data-deny]");
+
+      dialog.showModal();
+
+      confirmButton.addEventListener("click", () => {
+        reg.waiting.postMessage("skipWaiting");
+      });
+
+      denyButton.addEventListener("click", () => {
+        dialog.close();
+      });
+    }
+  }
 }
 
-function promptUserToRefresh(reg) {
-  console.log("Prompting User")
-  reg.waiting.postMessage("skipWaiting");
-}
+customElements.define("dialog-handle-sw-update", HandleSWUpdate);
