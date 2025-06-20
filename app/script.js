@@ -1,1 +1,1 @@
-console.log("This is from Script!")
+console.log("This is from Script base!")

@@ -1,7 +1,8 @@
 {
-  "version": "4",
+  "version": "5",
   "specifiers": {
     "jsr:@std/assert@1": "1.0.6",
+    "jsr:@std/async@*": "1.0.8",
     "jsr:@std/cli@^1.0.6": "1.0.6",
     "jsr:@std/encoding@^1.0.5": "1.0.5",
     "jsr:@std/fmt@^1.0.3": "1.0.3",
@@ -14,7 +15,9 @@
     "npm:@types/react@*": "18.3.11",
     "npm:react-dom@*": "18.3.1_react@18.3.1",
     "npm:react@*": "18.3.1",
-    "npm:web-push@*": "3.6.7"
+    "npm:web-push@*": "3.6.7",
+    "npm:zod@*": "3.25.64",
+    "npm:zod@^3.25.64": "3.25.64"
   },
   "jsr": {
     "@std/assert@1.0.6": {
@@ -22,6 +25,9 @@
       "dependencies": [
         "jsr:@std/internal"
       ]
+    },
+    "@std/async@1.0.8": {
+      "integrity": "c057c5211a0f1d12e7dcd111ab430091301b8d64b4250052a79d277383bc3ba7"
     },
     "@std/cli@1.0.6": {
       "integrity": "d22d8b38c66c666d7ad1f2a66c5b122da1704f985d3c47f01129f05abb6c5d3d"
@@ -142,7 +148,8 @@
       "integrity": "sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==",
       "dependencies": [
         "js-tokens"
-      ]
+      ],
+      "bin": true
     },
     "minimalistic-assert@1.0.1": {
       "integrity": "sha512-UtJcAD4yEaGtjPezWuO9wC4nwUnVH/8/Im3yEHQP4b67cXlD/Qr9hdITCU1xDbSEXg2XKNaP8jsReV7vQd00/A=="
@@ -187,7 +194,11 @@
         "https-proxy-agent",
         "jws",
         "minimist"
-      ]
+      ],
+      "bin": true
+    },
+    "zod@3.25.64": {
+      "integrity": "sha512-hbP9FpSZf7pkS7hRVUrOjhwKJNyampPgtXKc3AN6DsWtoHsg2Sb4SQaS4Tcay380zSwd2VPo9G9180emBACp5g=="
     }
   },
   "redirects": {
@@ -201,7 +212,9 @@
   "workspace": {
     "dependencies": [
       "jsr:@std/assert@1",
-      "npm:react@*"
+      "npm:@types/react@*",
+      "npm:react@*",
+      "npm:zod@^3.25.64"
     ]
   }
 }
